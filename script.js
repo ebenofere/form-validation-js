@@ -12,16 +12,21 @@ function showError(input, message) {
   small.innerText = message;
 }
 
+// Show success outline
 function showSuccess(input) {
   const formControl = input.parentElement;
   formControl.className = "form-control success";
+}
+
+function getFieldName(input) {
+  return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
 
 // Check required fields
 function checkRequired(inputArr) {
   inputArr.forEach((input) => {
     if (input.value.trim() === "") {
-      showError(input, `value is required`);
+      showError(input, `${getFieldName(input)} is required`);
     } else {
       showSuccess(input);
     }
