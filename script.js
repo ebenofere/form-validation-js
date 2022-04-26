@@ -49,13 +49,20 @@ const checkEmail = (input) => {
     : showError(input, `Email is not valid`);
 };
 
-// Check passwords match
+// Check required fields
 function checkRequired(inputArr) {
   inputArr.forEach((input) => {
     input.value.trim() === ""
       ? showError(input, `${getFieldName(input)} is required`)
       : showSuccess(input);
   });
+}
+
+// Check passwords match
+function checkPasswordMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, `Both passwords don't match!`);
+  }
 }
 
 // Event listeners
@@ -66,4 +73,5 @@ form.addEventListener("submit", function (e) {
   checkLength(username, 3, 15);
   checkLength(password, 6, 25);
   checkEmail(email);
+  checkPasswordMatch(password, password2);
 });
