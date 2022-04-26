@@ -11,10 +11,33 @@ function showError(input, message) {
   small.innerText = message;
 }
 
+function showSuccess(input) {
+  const formControl = input.parentElement;
+  formControl.className = "form-control success";
+}
+
 function getFieldName(input) {
   return input.id.charAt(0).toUpperCase() + input.id.slice(1);
 }
 
+// check input length
+function checkLength(input, min, max) {
+  if (input.value.length < min) {
+    showError(
+      input,
+      `${getFieldName(input)} must be at least ${min} characters`
+    );
+  } else if (input.value.length > max) {
+    showError(
+      input,
+      `${getFieldName(input)} must be at most ${max} characters.`
+    );
+  } else {
+    showSuccess(input);
+  }
+}
+
+// Check passwords match
 function checkRequired(inputArr) {
   inputArr.forEach((input) => {
     if (input.value.trim() === "") {
@@ -25,8 +48,11 @@ function checkRequired(inputArr) {
   });
 }
 
+// Event listeners
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
   checkRequired([username, email, password, password2]);
+  checkLength(username, 3, 15);
+  checkLength(password, 6, 25);
 });
